@@ -70,6 +70,16 @@ c:\Python37\python src/generate_unconditional_samples.py --nsamples 5
 
 c:\Python37\python src/generate_unconditional_samples.py --nsamples 5 --model_name '1558M'
 
+Скрипт "generate_unconditional_samples.py" генерирует текст на общую тематику
+
+Для того чтобы сгенерировать текст по ключу нужно использовать скрипт "interactive_conditional_samples.py"
+
+Для этого сначала заполняем файл "keywords.csv" - ключевыми словами и категорией WordPress, в которую будет добавлен пост.
+
+И запускаем скрипт, без параметра "nsamples", кол-во текстов будет столько сколько заданий в файле "keywords.csv":
+
+c:\Python37\python src/interactive_conditional_samples.py
+
 Примеры текстов 124M:
 
 https://nevep.ru/tmp/gpt/result1.html
