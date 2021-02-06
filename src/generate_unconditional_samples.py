@@ -6,8 +6,9 @@ import os
 import numpy as np
 import tensorflow as tf
 import time
-
 import model, sample, encoder
+import glob
+
 script_path = os.path.dirname(os.path.realpath(__file__))
 
 def writeln(filename, str):
@@ -75,6 +76,11 @@ def sample_model(
         
         if not os.path.exists(script_path + '\\..\\result'):
             os.makedirs(script_path + '\\..\\result')
+        files = glob.glob('result/*')
+        for f in files:
+            os.remove(f)
+
+
         print(time.strftime("%d.%m.%Y %H:%M:%S") + " Start")
         generated = 0
         while nsamples == 0 or generated < nsamples:

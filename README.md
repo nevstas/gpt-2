@@ -91,3 +91,7 @@ c:\Python37\python src/export_to_csv.py
 После запуска должен появиться файл export.csv
 
 Устанавливаем в WordPress плагин "WP All Import" и импортируем файл export.csv
+
+Пример сайта на WordPress:
+
+https://nevep.ru/tmp/gptwp/
