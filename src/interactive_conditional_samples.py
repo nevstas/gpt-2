@@ -102,7 +102,10 @@ def interact_model(
                     for i in range(batch_size):
                         generated += 1
                         text = enc.decode(out[i])
-                        text = "category:" + row[1] + "\n" + text
+                        param = "category:" + row[1]
+                        if row[2]:
+                            param = param + "|title:" + row[2]
+                        text = "param=" + param + "\n" + text
                         writeln("..\\result\\result" + str(generated) + ".txt", text)
                         print(time.strftime("%d.%m.%Y %H:%M:%S") + " result" + str(generated) + ".txt Done")
                       

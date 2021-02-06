@@ -10,21 +10,31 @@ posts = []
 for f in list_files:
     with open(f,'r', encoding='utf-8') as file:
         category = ''
+        title = ''
         post = file.read()
         first_line = post.split('\n', 1)[0]
-        m = re.search('^category:(.*?)$', first_line)	
+        m = re.search('^param=(.*?)$', first_line)    
         if m:
-            category = m.group(1)
-            post = post[1:]
+            params = m.group(1).split('|')
+            for param in params:
+                param_arr = param.split(':')
+                param_name = param_arr[0]
+                param_value = param_arr[1]
+                if param_name == 'category':
+                    category = param_value
+                elif param_name == 'title':
+                    title = param_value
+
             post = 'n'.join(post.split('n')[1:])
             first_line = post.split('\n', 1)[0]
 
         post = post.replace("\n", "<br>")
-        m = re.search('^(.{60}.*?)(\s|$)', first_line)		
-        if m:
-            title = m.group(1) + "..."
-        else:
-            title = first_line
+        if not title:
+            m = re.search('^(.{60}.*?)(\s|$)', first_line)        
+            if m:
+                title = m.group(1) + "..."
+            else:
+                title = first_line
         posts.append([title, post, category])
   
 
