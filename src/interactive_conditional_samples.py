@@ -14,7 +14,7 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 
 def writeln(filename, str):
     global script_path
-    with open(script_path + "\\" + filename, 'w', encoding="utf-8") as the_file:
+    with open(script_path + "//" + filename, 'w', encoding="utf-8") as the_file:
         the_file.write(str)
 
 def interact_model(
@@ -78,8 +78,8 @@ def interact_model(
         ckpt = tf.train.latest_checkpoint(os.path.join(models_dir, model_name))
         saver.restore(sess, ckpt)
 
-        if not os.path.exists(script_path + '\\..\\result'):
-            os.makedirs(script_path + '\\..\\result')
+        if not os.path.exists(script_path + '//..//result'):
+            os.makedirs(script_path + '//..//result')
         files = glob.glob('result/*')
         for f in files:
             os.remove(f)
@@ -106,7 +106,7 @@ def interact_model(
                         if row[2]:
                             param = param + "|title:" + row[2]
                         text = "param=" + param + "\n" + text
-                        writeln("..\\result\\result" + str(generated) + ".txt", text)
+                        writeln("..//result//result" + str(generated) + ".txt", text)
                         print(time.strftime("%d.%m.%Y %H:%M:%S") + " result" + str(generated) + ".txt Done")
                       
                 
