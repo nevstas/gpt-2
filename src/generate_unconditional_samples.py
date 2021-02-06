@@ -73,6 +73,8 @@ def sample_model(
         ckpt = tf.train.latest_checkpoint(os.path.join(models_dir, model_name))
         saver.restore(sess, ckpt)
         
+        if not os.path.exists(script_path + '\\..\\result'):
+            os.makedirs(script_path + '\\..\\result')
         print(time.strftime("%d.%m.%Y %H:%M:%S") + " Start")
         generated = 0
         while nsamples == 0 or generated < nsamples:
