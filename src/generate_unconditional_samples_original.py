@@ -5,20 +5,13 @@ import json
 import os
 import numpy as np
 import tensorflow as tf
-import time
 
 import model, sample, encoder
-script_path = os.path.dirname(os.path.realpath(__file__))
-
-def writeln(filename, str):
-    global script_path
-    with open(script_path + "\\" + filename, 'w', encoding="utf-8") as the_file:
-        the_file.write(str)
 
 def sample_model(
     model_name='124M',
     seed=None,
-    nsamples=1,
+    nsamples=0,
     batch_size=1,
     length=None,
     temperature=1,
@@ -72,16 +65,16 @@ def sample_model(
         saver = tf.train.Saver()
         ckpt = tf.train.latest_checkpoint(os.path.join(models_dir, model_name))
         saver.restore(sess, ckpt)
-        
-        print(time.strftime("%d.%m.%Y %H:%M:%S") + " Start")
+
         generated = 0
         while nsamples == 0 or generated < nsamples:
             out = sess.run(output)
             for i in range(batch_size):
                 generated += batch_size
                 text = enc.decode(out[i])
-                writeln("..\\result\\result" + str(generated) + ".txt", text)
-                print(time.strftime("%d.%m.%Y %H:%M:%S") + " result" + str(generated) + ".txt Done")
+                print("=" * 40 + " SAMPLE " + str(generated) + " " + "=" * 40)
+                print(text)
 
 if __name__ == '__main__':
     fire.Fire(sample_model)
+
