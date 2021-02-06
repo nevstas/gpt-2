@@ -1,17 +1,27 @@
 # Делаем сайт на WordPress из генерируемого контента GPT-2
 
 Скачиваем Python, обязательно версии 3.7.* и обязательно 64 битной разрядности.
+
 Ссылка для Windows:
+
 https://www.python.org/ftp/python/3.7.9/python-3.7.9-amd64.exe
+
 Я выбрал кастомную установку, изменил только путь установки "c:\Python37\", остальные параметры оставил по умолчанию.
 
+
+
 Далее нужно установить Microsoft Visual C++ 14.*
+
 По этой ссылке скачиваем "Build Tools для Visual Studio 2019"
+
 https://visualstudio.microsoft.com/ru/downloads/
+
 Для этого раскрываем меню "Инструменты для Visual Studio 2019" и скачиваем "Build Tools для Visual Studio 2019"
+
 Запускаем и выбираем установку "Средства сборки C++"
 
 Перезагружаемся
+
 
 Скачиваем zip архив по ссылке:
 https://github.com/nevstas/gpt-2/archive/master.zip
