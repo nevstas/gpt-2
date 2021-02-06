@@ -150,7 +150,7 @@ drive.mount('/content/drive')
 
 !pip3 install -r requirements.txt
 
-Далее можно запускать скрипты, этим командами:
+Далее можно запускать скрипты, этими командами:
 
 !python3 src/generate_unconditional_samples.py
 
@@ -158,10 +158,36 @@ drive.mount('/content/drive')
 
 !python3 src/interactive_conditional_samples.py
 
+!python3 src/interactive_conditional_samples.py --model_name '1558M'
+
 !python3 src/export_to_csv.py
 
 Время генерации текста на Бесплатном Google Colab GPU: 124M - 11 сек, 1558M - 50 сек
 
 Время генерации текста на Бесплатном Google Colab TPU: 124M - 1 мин 50 сек, 1558M - не замерял
 
-если медленно выполняет, значит нет GPU: попробуйте изменить Runtime Type с GPU на TPU и обратно в меню Runtime → Change Runtime Type (Среда выполнения -> Сменить среду выполнения)
+Если медленно выполняет, значит нет GPU: попробуйте изменить Runtime Type на GPU в меню Runtime → Change Runtime Type (Среда выполнения -> Сменить среду выполнения)
+
+На данный момент есть два варианта генерации:
+
+1) Генерация текстов общей тематики ("generate_unconditional_samples.py"). Title задавать нельзя, он генерируется из первых 60 символов поста.
+
+Примеры постов первого варианта:
+
+https://nevep.ru/tmp/gptwp/category/uncategorized/
+
+2) Генерация по ключу ("interactive_conditional_samples.py"). На входе в скрипт поступает файл "keywords.csv" он выглядит вот так
+
+https://nevep.ru/screenshots/2021-02-06_18.22.24_stqmczh5to.png
+
+В первой колонке задается ключ по которому GPT-2 генерирует статью, часто бывает что ключ и получившаяся статья имеют мало чего общего. 
+
+Вторая колонка это категория в WordPress. 
+
+Третья колонка это title - его можно задавать, но можно и не задавать, тогда он сгенерируется из первых 60 символов поста. Сколько строк в cvs файле столько текстов и генерится.
+
+Примеры постов второго варианта:
+
+https://nevep.ru/tmp/gptwp/category/car/
+
+https://nevep.ru/tmp/gptwp/category/music/

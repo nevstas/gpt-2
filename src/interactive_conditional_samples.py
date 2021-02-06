@@ -48,6 +48,8 @@ def interact_model(
      :models_dir : path to parent folder containing model subfolders
      (i.e. contains the <model_name> folder)
     """
+
+
     models_dir = os.path.expanduser(os.path.expandvars(models_dir))
     if batch_size is None:
         batch_size = 1
@@ -102,6 +104,7 @@ def interact_model(
                     for i in range(batch_size):
                         generated += 1
                         text = enc.decode(out[i])
+                        text = text.replace("<|endoftext|>", "")
                         text = os.linesep.join([s for s in text.splitlines() if s])
                         param = "category:" + row[1]
                         if row[2]:
