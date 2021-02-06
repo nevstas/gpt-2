@@ -1,58 +1,63 @@
-**Status:** Archive (code is provided as-is, no updates expected)
+# Делаем сайт на WordPress из генерируемого контента GPT-2
 
-# gpt-2
+Скачиваем Python, обязательно версии 3.7.* и обязательно 64 битной разрядности.
+Ссылка для Windows:
+https://www.python.org/ftp/python/3.7.9/python-3.7.9-amd64.exe
+Я выбрал кастомную установку, изменил только путь установки "c:\Python37\", остальные параметры оставил по умолчанию.
 
-Code and models from the paper ["Language Models are Unsupervised Multitask Learners"](https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf).
+Далее нужно установить Microsoft Visual C++ 14.*
+По этой ссылке скачиваем "Build Tools для Visual Studio 2019"
+https://visualstudio.microsoft.com/ru/downloads/
+Для этого раскрываем меню "Инструменты для Visual Studio 2019" и скачиваем "Build Tools для Visual Studio 2019"
+Запускаем и выбираем установку "Средства сборки C++"
 
-You can read about GPT-2 and its staged release in our [original blog post](https://blog.openai.com/better-language-models/), [6 month follow-up post](https://openai.com/blog/gpt-2-6-month-follow-up/), and [final post](https://www.openai.com/blog/gpt-2-1-5b-release/).
+Перезагружаемся
 
-We have also [released a dataset](https://github.com/openai/gpt-2-output-dataset) for researchers to study their behaviors.
+Скачиваем zip архив по ссылке:
+https://github.com/nevstas/gpt-2/archive/master.zip
+Распаковываем, у меня например по такому пути "e:\python\gpt-2\"
+Открываем командную строку (консоль) и переходим в папку "gpt-2"
 
-<sup>*</sup> *Note that our original parameter counts were wrong due to an error (in our previous blog posts and paper).  Thus you may have seen small referred to as 117M and medium referred to as 345M.*
+c:\Python37\Scripts\pip3 install --upgrade setuptools
 
-## Usage
+Устанавливаем tensorflow. Либо CPU версию, либо GPU версию (у меня CPU версия)
+Для CPU версии выполняем команду:
+c:\Python37\Scripts\pip3 install tensorflow==1.15
+Для GPU версии выполняем команду:
+c:\Python37\Scripts\pip3 install tensorflow-gpu==1.15
+Для GPU вроде как нужна видеокарта с CUDA, и нужно настроить драйвер. Я GPU версию не устанавливал.
 
-This repository is meant to be a starting point for researchers and engineers to experiment with GPT-2.
+c:\Python37\Scripts\pip3 install -r requirements.txt
 
-For basic information, see our [model card](./model_card.md).
+Загружаем модели
+c:\Python37\python download_model.py 124M
+c:\Python37\python download_model.py 355M
+c:\Python37\python download_model.py 774M
+c:\Python37\python download_model.py 1558M
 
-### Some caveats
+По умолчанию используется модель 124M
+Можно пытаться запускать генерацию командой:
+c:\Python37\python src/generate_unconditional_samples.py
+Ждем пару минут, в папке "result" должен появиться файл "result1.txt"
 
-- GPT-2 models' robustness and worst case behaviors are not well-understood.  As with any machine-learned model, carefully evaluate GPT-2 for your use case, especially if used without fine-tuning or in safety-critical applications where reliability is important.
-- The dataset our GPT-2 models were trained on contains many texts with [biases](https://twitter.com/TomerUllman/status/1101485289720242177) and factual inaccuracies, and thus GPT-2 models are likely to be biased and inaccurate as well.
-- To avoid having samples mistaken as human-written, we recommend clearly labeling samples as synthetic before wide dissemination.  Our models are often incoherent or inaccurate in subtle ways, which takes more than a quick read for a human to notice.
+Можно запустить генерацию нескольких текстов за раз, передав в параметре "nsamples" количество, например 5:
+c:\Python37\python src/generate_unconditional_samples.py --nsamples 5
 
-### Work with us
+Можно указать другую модель в параметре "model_name":
+c:\Python37\python src/generate_unconditional_samples.py --nsamples 5 --model_name '1558M'
 
-Please [let us know](mailto:languagequestions@openai.com) if you’re doing interesting research with or working on applications of GPT-2!  We’re especially interested in hearing from and potentially working with those who are studying
-- Potential malicious use cases and defenses against them (e.g. the detectability of synthetic text)
-- The extent of problematic content (e.g. bias) being baked into the models and effective mitigations
+Примеры текстов 124M:
+https://nevep.ru/tmp/gpt/result1.html
+https://nevep.ru/tmp/gpt/result2.html
 
-## Development
+Примеры текстов 1558M:
+https://nevep.ru/tmp/gpt/result-1558M-1.html
+https://nevep.ru/tmp/gpt/result-1558M-2.html
 
-See [DEVELOPERS.md](./DEVELOPERS.md)
+Время генерации текста на CPU: 124M - 3 минуты, 1558M - 30 минут
 
-## Contributors
+Делаем экспорт постов в CSV для дальнейшей загрузки в WordPress:
+c:\Python37\python src/export_to_csv.py
+После запуска должен появиться файл export.csv
 
-See [CONTRIBUTORS.md](./CONTRIBUTORS.md)
-
-## Citation
-
-Please use the following bibtex entry:
-```
-@article{radford2019language,
-  title={Language Models are Unsupervised Multitask Learners},
-  author={Radford, Alec and Wu, Jeff and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya},
-  year={2019}
-}
-```
-
-## Future work
-
-We may release code for evaluating the models on various benchmarks.
-
-We are still considering release of the larger models.
-
-## License
-
-[Modified MIT](./LICENSE)
+Устанавливаем в WordPress плагин "WP All Import" и импортируем файл export.csv
