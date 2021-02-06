@@ -88,6 +88,7 @@ def sample_model(
             for i in range(batch_size):
                 generated += batch_size
                 text = enc.decode(out[i])
+                text = os.linesep.join([s for s in text.splitlines() if s])
                 writeln("..//result//result" + str(generated) + ".txt", text)
                 print(time.strftime("%d.%m.%Y %H:%M:%S") + " result" + str(generated) + ".txt Done")
 

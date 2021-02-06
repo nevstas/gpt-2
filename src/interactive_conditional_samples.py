@@ -102,6 +102,7 @@ def interact_model(
                     for i in range(batch_size):
                         generated += 1
                         text = enc.decode(out[i])
+                        text = os.linesep.join([s for s in text.splitlines() if s])
                         param = "category:" + row[1]
                         if row[2]:
                             param = param + "|title:" + row[2]
