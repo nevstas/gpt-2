@@ -5,11 +5,14 @@ import csv
 import re
 import urllib.request
 import json
+import os
 
 list_files = glob.glob("result/*")
+list_files = sorted(list_files, key=os.path.getmtime)
+
 posts = []
 
-is_translate = True #True - enalbe translate, False - disable translate
+is_translate = False #True - enable translate, False - disable translate
 translate_apikey = "4bd8ecae-24e7-4df9-8747-3230ce9abe6c"
 translate_lang = "ru" #Supported: ar, bn, bg, zh-hans, hr, cs, da, nl, et, fi, fr, de, el, he, hi, is, id, it, ja, ko, lv, lt, ms, no, ps, fa, pl, pt, ro, ru, sk, sl, es, sv, th, tr, uk, ur, vi, cy
 
@@ -32,11 +35,8 @@ for f in list_files:
         first_line = post.split('\n', 1)[0]
         m = re.search('^param=(.*?)$', first_line)    
         if m:
-            params = m.group(1).split('|')
-            for param in params:
-                param_arr = param.split(':')
-                param_name = param_arr[0]
-                param_value = param_arr[1]
+            params = json.loads(m.group(1))
+            for param_name, param_value in params.items():
                 if param_name == 'category':
                     category = param_value
                 elif param_name == 'title':
@@ -47,10 +47,9 @@ for f in list_files:
 
         if is_translate:
             post = translate(post, "en", translate_lang)
+			first_line = post.split('\n', 1)[0]
         post = post.replace("\n", "<br>")
         if not title:
-            if is_translate:
-                first_line = translate(first_line, "en", translate_lang)
             m = re.search('^(.{60}.*?)(\s|$)', first_line)        
             if m:
                 title = m.group(1) + "..."

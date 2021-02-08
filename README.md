@@ -191,3 +191,5 @@ https://nevep.ru/screenshots/2021-02-06_18.22.24_stqmczh5to.png
 https://nevep.ru/tmp/gptwp/category/car/
 
 https://nevep.ru/tmp/gptwp/category/music/
+
+UP: Добавлены переводы. Для того чтобы включить/выключить перевод нужно в файле "export_to_csv.py" задать True или False параметру is_translate. И если перевод включен задать язык в параметре translate_lang

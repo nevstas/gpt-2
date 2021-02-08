@@ -106,10 +106,11 @@ def interact_model(
                         text = enc.decode(out[i])
                         text = text.replace("<|endoftext|>", "")
                         text = os.linesep.join([s for s in text.splitlines() if s])
-                        param = "category:" + row[1]
+                        params = {}
+                        params['category'] = row[1]                        
                         if row[2]:
-                            param = param + "|title:" + row[2]
-                        text = "param=" + param + "\n" + text
+                            params['title'] = row[2]
+                        text = "params=" + json.dumps(params) + "\n" + text
                         writeln("..//result//result" + str(generated) + ".txt", text)
                         print(time.strftime("%d.%m.%Y %H:%M:%S") + " result" + str(generated) + ".txt Done")
                       
