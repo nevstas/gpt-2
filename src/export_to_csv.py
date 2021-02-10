@@ -33,7 +33,7 @@ for f in list_files:
         title = ''
         post = file.read()
         first_line = post.split('\n', 1)[0]
-        m = re.search('^param=(.*?)$', first_line)    
+        m = re.search('^params=(.*?)$', first_line)    
         if m:
             params = json.loads(m.group(1))
             for param_name, param_value in params.items():
