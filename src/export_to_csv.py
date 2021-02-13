@@ -42,7 +42,7 @@ for f in list_files:
                 elif param_name == 'title':
                     title = param_value
 
-            post = 'n'.join(post.split('n')[1:])
+            post = post.replace(first_line + "\n", "")
             first_line = post.split('\n', 1)[0]
 
         if is_translate:
