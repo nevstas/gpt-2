@@ -47,7 +47,7 @@ for f in list_files:
 
         if is_translate:
             post = translate(post, "en", translate_lang)
-			first_line = post.split('\n', 1)[0]
+            first_line = post.split('\n', 1)[0]
         post = post.replace("\n", "<br>")
         if not title:
             m = re.search('^(.{60}.*?)(\s|$)', first_line)        
